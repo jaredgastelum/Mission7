@@ -1,12 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Application Submitted";
 }
- 
+
+@model Mission6.Models.ApplicationResponse;
 
 
 <link href='https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700' rel='stylesheet' type='text/css'>
 <style>
-	import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
+    import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
 	import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
 </style>
 <link rel="stylesheet" href="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/default_thank_you.css">
@@ -18,6 +19,6 @@
 
 <div class="main-content">
     <i class="fa fa-check main-content__checkmark" id="checkmark"></i>
-    <p class="main-content__body" data-lead-id="main-content-body">Your movie has been added</p>
+    <p class="main-content__body" data-lead-id="main-content-body"><b>@Model.Title</b> has been added to your movie list.</p>
 </div>
 
