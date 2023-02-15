@@ -12,5 +12,26 @@ namespace Mission6.Models
         }
 
         public DbSet<ApplicationResponse> responses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder mb)
+        {
+            //mb.Entity<ApplicationResponse>().HasData(
+
+            //    new ApplicationResponse
+            //    {
+            //        MovieID: 1,
+            //        Category: "Action/Adventure",
+            //        Title: "Harry Potter and the Deathly Hallows – Part 2",
+            //        Year: ,
+            //        Director: ,
+            //        Rating: ,
+            //        Edited: ,
+            //        LentTo: ,
+            //        Notes: ,
+            //    }
+
+
+            //    );
+        }
     }
 }
