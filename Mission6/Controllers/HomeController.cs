@@ -25,12 +25,20 @@ namespace Mission6.Controllers
             return View();
         }
 
+        // PODCASTS PAGE
+        public IActionResult Podcasts()
+        {
+            return View();
+        }
+
+        // ADD MOVIE FORM
         [HttpGet]
         public IActionResult AddMovie ()
         {
             return View();
         }
 
+        // THIS WILL REDIRECT THE USER TO A CONFIRMATION PAGE AFTER THEY SUBMIT A MOVIE TO THE DIRECTORY
         [HttpPost]
         public IActionResult AddMovie(ApplicationResponse ar)
         {
