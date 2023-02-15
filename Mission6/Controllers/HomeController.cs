@@ -23,6 +23,18 @@ namespace Mission6.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AddMovie ()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddMovie(ApplicationResponse ar)
+        {
+            return View("Confirmation");
+        }
+
         public IActionResult Privacy()
         {
             return View();
