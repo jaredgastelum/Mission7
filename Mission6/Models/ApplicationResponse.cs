@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Mission6.Models
 {
     public class ApplicationResponse
     {
-        [System.ComponentModel.DataAnnotations.Key]
-        [System.ComponentModel.DataAnnotations.Required]
+        [Key]
+        [Required]
         public int MovieID { get; set; }
         public string Category { get; set; }
         public string Title { get; set; }
