@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission6.Models;
 
@@ -11,12 +12,10 @@ namespace Mission6.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieContext MovieContextFile { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MovieContext movie)
+        public HomeController(MovieContext movie)
         {
-            _logger = logger;
             MovieContextFile = movie;
         }
 
@@ -35,6 +34,8 @@ namespace Mission6.Controllers
         [HttpGet]
         public IActionResult AddMovie ()
         {
+            ViewBag.Categories = MovieContextFile.Categories.ToList();
+
             return View();
         }
 
@@ -42,20 +43,65 @@ namespace Mission6.Controllers
         [HttpPost]
         public IActionResult AddMovie(ApplicationResponse ar)
         {
-            MovieContextFile.Add(ar);
+            if (ModelState.IsValid)
+            {
+                MovieContextFile.Add(ar);
+                MovieContextFile.SaveChanges();
+                return View("Confirmation", ar);
+            }
+
+            else //IF INVALID
+            {
+                ViewBag.Categories = MovieContextFile.Categories.ToList();
+
+                return View(ar);
+            }
+        }
+
+        public IActionResult MovieList()
+        {
+            var applications = MovieContextFile.Responses
+                .Include(x => x.Category)
+                .OrderBy(x => x.Category)
+                .ToList();
+
+            return View(applications);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int applicationid)
+        {
+            ViewBag.Categories = MovieContextFile.Categories.ToList();
+
+            var application = MovieContextFile.Responses.Single(x => x.MovieID == applicationid);
+
+            return View("AddMovie", application);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ApplicationResponse ar)
+        {
+            MovieContextFile.Update(ar);
             MovieContextFile.SaveChanges();
-            return View("Confirmation", ar);
+
+            return RedirectToAction("MovieList");
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Delete(int applicationid)
         {
-            return View();
+            var application = MovieContextFile.Responses.Single(x => x.MovieID == applicationid);
+
+            return View(application);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult Delete(ApplicationResponse ar)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            MovieContextFile.Responses.Remove(ar);
+            MovieContextFile.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }

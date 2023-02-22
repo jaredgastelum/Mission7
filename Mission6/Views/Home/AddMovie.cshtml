@@ -234,22 +234,21 @@
 <div style="margin: auto; width: 50%;">
     <div class="testbox" style="">
         <form method="post">
+
+            <div asp-validation-summary="All"></div>
+
             <div class="banner">
                 <h1>Add Movie</h1>
             </div>
             <p>Enter the information below for the movie you would like to add</p>
             <div class="item">
-                <p style="font-weight: bold" asp-for="Category">Category<span>*</span></p>
-                <select asp-for="Category" required>
-                    <option selected value="" disabled selected></option>
-                    <option value="course-type">Action/Adventure</option>
-                    <option value="short-courses">Comedy</option>
-                    <option value="featured-courses">Drama</option>
-                    <option value="undergraduate">Family</option>
-                    <option value="undergraduate">Horror/Suspense</option>
-                    <option value="undergraduate">Miscellaneous</option>
-                    <option value="undergraduate">Television</option>
-                    <option value="undergraduate">VHS</option>
+                <p style="font-weight: bold" asp-for="CategoryID">Category<span>*</span></p>
+                <select asp-for="CategoryID" required>
+                    <option value="" disabled selected></option>
+                    @foreach(Category m in ViewBag.Categories)
+                    {
+                        <option value="@m.CategoryID">@m.CategoryName</option>
+                    }
                 </select>
             </div>
             <div class="item">
@@ -267,26 +266,30 @@
             <div class="item">
                 <p style="font-weight: bold" asp-for="Rating">Rating<span>*</span></p>
                 <select asp-for="Rating" required>
-                    <option selected value="" disabled selected></option>
-                    <option value="course-type">G</option>
-                    <option value="short-courses">PG</option>
-                    <option value="featured-courses">PG-13</option>
-                    <option value="undergraduate">R</option>
+                    <option value="" disabled selected></option>
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">R</option>
                 </select>
             </div>
+
+
             <div class="question">
                 <label>Edited</label>
                 <div class="question-answer">
                     <div>
-                        <input type="radio" value="none" id="radio_1" asp-for="Edited" />
-                        <label asp-for="Edited" class="radio"><span>Yes</span></label>
+                        <input id="Yes" type="radio" value="True" asp-for="Edited" />
+                        <label for="Yes" class="radio"><span>Yes</span></label>
                     </div>
                     <div>
-                        <input type="radio" value="none" id="radio_2" asp-for="Edited" />
-                        <label asp-for="Edited" class="radio"><span>No</span></label>
+                        <input id="No" type="radio" value="False" asp-for="Edited" />
+                        <label for="No" class="radio"><span>No</span></label>
                     </div>
                 </div>
             </div>
+
+
             <div class="item">
                 <label asp-for="LentTo">Lent To:</label>
                 <input id="state" type="text" asp-for="LentTo" />
